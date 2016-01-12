@@ -5,7 +5,7 @@
 import plistlib
 
 from mojo.extensions import getExtensionDefault, setExtensionDefault
-from robofab.interface.all.doalogue import PutFile, GetFile
+from robofab.interface.all.dialogue import PutFile, GetFile
 
 
 #----------
