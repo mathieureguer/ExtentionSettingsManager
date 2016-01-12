@@ -46,7 +46,7 @@ class ExtentionSettingsManager(object):
 
     # helpers
 
-    def prep_dict_with_prefix(self, dict, prefix)
+    def prep_dict_with_prefix(self, dict, prefix):
         defaults = {}
         for k, v in dict.keys():
             defaults[prefix + k] = v
