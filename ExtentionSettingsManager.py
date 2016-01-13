@@ -82,19 +82,19 @@ class ExtentionSettingsManager(object):
     # file handling
 
     def write_preset(self, dict, path):
-        f = open(path, w)
+        f = open(path, "w")
         f.write(self.dict_to_plist(dict))
         f.close()
 
-    def write_preset_dialogue(self, dict, message="Save Preset File", fileName=None):
+    def write_preset_dialog(self, dict, message="Save Preset File", fileName=None):
         path = PutFile(message=message, fileName=fileName)
         self.write_preset(dict, path)
 
     def read_preset(self, path):
-        f = open(path, r)
+        f = open(path, "r")
         plist = f.read()
         return self.plist_to_dict(plist)
 
-    def read_preset_dialogue(self, message="Select Preset File", title=None, fileTypes=None):
+    def read_preset_dialog(self, message="Select Preset File", title=None, fileTypes=None):
         path = GetFile(message=message, title=title, fileTypes=fileTypes)
         return self.read_preset(path)
