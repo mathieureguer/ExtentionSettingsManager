@@ -67,7 +67,7 @@ class ExtentionSettingsManager(object):
         defaults = {}
         for k, v in dict.items():
             defaults[prefix + k] = v
-        return default
+        return defaults
  
 
     # Presets plist
