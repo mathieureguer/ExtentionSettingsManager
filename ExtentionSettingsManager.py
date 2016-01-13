@@ -44,7 +44,7 @@ class ExtentionSettingsManager(object):
 
     def set_defaults(self, dict):
         defaults = self.prep_dict_with_prefix(dict, self.defaultKeyBase)
-        for k, v in defaults:
+        for k, v in defaults.items():
             setExtensionDefault(k, v)
         self.keys.update(dict.keys())
 
