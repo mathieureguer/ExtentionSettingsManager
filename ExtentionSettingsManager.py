@@ -15,7 +15,7 @@ from robofab.interface.all.dialogs import PutFile, GetFile
 class ExtentionSettingsManager(object):
     """
     Deals with an extention defaults.
-    Keep track of the registered keys
+    Keep track of the registered keys, can return all settings of an extention as dict
     Can import and export dict presets as xml
     """
 
