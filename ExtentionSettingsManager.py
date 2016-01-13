@@ -51,7 +51,7 @@ class ExtentionSettingsManager(object):
 
     def get_defaults(self, fallback=None):
         defaults = {}
-        for k in self.keys():
+        for k in self.keys:
             defaults[k] = self.get_default(k, fallback=fallback)
         return defaults
 
