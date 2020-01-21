@@ -1,15 +1,15 @@
 #----------
-# import 
+# import
 #----------
 
 import plistlib
 
 from mojo.extensions import getExtensionDefault, setExtensionDefault
-from robofab.interface.all.dialogs import PutFile, GetFile
+# from vanilla.dialogs import PutFile, GetFile
 
 
 #----------
-# 
+#
 #----------
 
 class ExtentionSettingsManager(object):
@@ -27,7 +27,7 @@ class ExtentionSettingsManager(object):
 
     def register_defaults(self, dict):
         defaults = self.prep_dict_with_prefix(dict, self.defaultKeyBase)
-        
+
         # import registerExtensionsDefaults work-around (ripped off from Tal Lemming)
         try:
             from mojo.extensions import registerExtensionsDefaults
@@ -40,7 +40,6 @@ class ExtentionSettingsManager(object):
 
         registerExtensionsDefaults(defaults)
         self.keys.update(dict.keys())
- 
 
     def set_defaults(self, dict):
         defaults = self.prep_dict_with_prefix(dict, self.defaultKeyBase)
@@ -48,18 +47,15 @@ class ExtentionSettingsManager(object):
             setExtensionDefault(k, v)
         self.keys.update(dict.keys())
 
-
     def get_defaults(self, fallback=None):
         defaults = {}
         for k in self.keys:
             defaults[k] = self.get_default(k, fallback=fallback)
         return defaults
 
-
     def get_default(self, key, fallback=None):
         k = self.defaultKeyBase + key
         return getExtensionDefault(k, fallback=fallback)
-
 
     # helpers
 
@@ -68,7 +64,6 @@ class ExtentionSettingsManager(object):
         for k, v in dict.items():
             defaults[prefix + k] = v
         return defaults
- 
 
     # Presets plist
 
@@ -78,23 +73,22 @@ class ExtentionSettingsManager(object):
     def plist_to_dict(self, plist):
         return plistlib.readPlistFromString(plist)
 
-
     # file handling
 
     def write_preset(self, dict, path):
-        f = open(path, "w")
-        f.write(self.dict_to_plist(dict))
-        f.close()
+        with open(path, "w+") as f:
+            f.write(self.dict_to_plist(dict))
 
-    def write_preset_dialog(self, dict, message="Save Preset File", fileName=None):
-        path = PutFile(message=message, fileName=fileName)
-        self.write_preset(dict, path)
 
     def read_preset(self, path):
-        f = open(path, "r")
-        plist = f.read()
-        return self.plist_to_dict(plist)
+        with open(path, "r") as f:
+            plist = f.read()
+            return self.plist_to_dict(plist)
 
-    def read_preset_dialog(self, message="Select Preset File", title=None, fileTypes=None):
-        path = GetFile(message=message, title=title, fileTypes=fileTypes)
-        return self.read_preset(path)
+    # def write_preset_dialog(self, dict, message="Save Preset File", fileName=None):
+    #     path = PutFile(message=message, fileName=fileName)
+    #     self.write_preset(dict, path)
+
+    # def read_preset_dialog(self, message="Select Preset File", title=None, fileTypes=None):
+    #     path = GetFile(message=message, title=title, fileTypes=fileTypes)
+    #     return self.read_preset(path)
