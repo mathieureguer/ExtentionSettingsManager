@@ -38,13 +38,14 @@ class ExtentionSettingsManager(UserDict):
             self.set_extention_default(key, value)
 
     def set_extention_default(self, key, value):
+        self[key] = value
         setExtensionDefault(self.key_with_prefix(key), value)
 
-    def get_extention_defaults(self, fallback=None):
+    def load_extention_defaults(self, fallback=None):
         defaults = {}
         for key in self.data.keys():
             defaults[key] = self.get_extention_default(key, fallback=fallback)
-        return defaults
+        self.data.update(defaults)
 
     def get_extention_default(self, key, fallback=None):
         return getExtensionDefault(self.key_with_prefix(key), fallback=fallback)
@@ -77,7 +78,7 @@ class ExtentionSettingsManager(UserDict):
 
     def register_input(self, key, input_object):
         self._input_map[key] = input_object
-        self[key] = self._get_input_value(input_object)
+        # self[key] = self._get_input_value(input_object)
 
     def load_settings_from_input(self):
         for key, input_object in self._input_map.items():
