@@ -33,21 +33,20 @@ class ExtentionSettingsManager(UserDict):
                         setExtensionDefault(k, v)
         registerExtensionsDefaults(self.data_with_prefix)
 
-    def set_extention_defaults(self):
+    def save_extention_settings(self):
         for key, value in self.data.items():
-            self.set_extention_default(key, value)
+            self._set_extention_setting(key, value)
 
-    def set_extention_default(self, key, value):
-        self[key] = value
+    def _set_extention_setting(self, key, value):
         setExtensionDefault(self.key_with_prefix(key), value)
 
-    def load_extention_defaults(self, fallback=None):
+    def load_extention_settings(self, fallback=None):
         defaults = {}
         for key in self.data.keys():
-            defaults[key] = self.get_extention_default(key, fallback=fallback)
+            defaults[key] = self._get_extention_setting(key, fallback=fallback)
         self.data.update(defaults)
 
-    def get_extention_default(self, key, fallback=None):
+    def _get_extention_setting(self, key, fallback=None):
         return getExtensionDefault(self.key_with_prefix(key), fallback=fallback)
 
     # ----------------------------------------
@@ -87,7 +86,7 @@ class ExtentionSettingsManager(UserDict):
     def set_input_from_default(self):
         for key, input_object in self._input_map.items():
             if key in self.keys():
-                self._set_input_value(input_object, value)
+                self._set_input_value(input_object, self[key])
 
     def _get_input_value(self, input_object):
         if type(input_object) in [vanilla.EditText, vanilla.TextBox, vanilla.CheckBox, vanilla.ComboBox]:
