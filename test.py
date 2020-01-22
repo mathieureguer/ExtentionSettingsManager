@@ -1,6 +1,11 @@
+import sys
 import unittest
+from unittest.mock import MagicMock, patch
 
-from ExtentionSettingsManager.ExtentionSettingsManager import ExtentionSettingsManager
+sys.modules['mojo.extensions'] = MagicMock()
+sys.modules['vanilla'] = MagicMock()
+
+from ExtentionSettingsManager import ExtentionSettingsManager
 
 
 KEY_PREFIX = "com.mathieureguer.test."
@@ -48,7 +53,7 @@ class TestExtentionSettingManager(unittest.TestCase):
         manager = ExtentionSettingsManager(KEY_PREFIX)
         manager.update(TEST_DATA)
 
-        self.assertEqual(manager.data_with_prefixed_keys, TEST_DATA_PREFIXED)
+        self.assertEqual(manager.data_with_prefix, TEST_DATA_PREFIXED)
 
     def test_dict_cleaner(self):
         """
