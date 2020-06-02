@@ -6,7 +6,7 @@ from mojo.extensions import getExtensionDefault, setExtensionDefault
 
 INPUT_MAP = {
     "direct_get_set": [vanilla.TextEditor, vanilla.EditText, vanilla.TextBox, vanilla.CheckBox, vanilla.ComboBox],
-    "index_get_set": [vanilla.PopupButton],
+    "index_get_set": [vanilla.PopUpButton],
 }
 
 
