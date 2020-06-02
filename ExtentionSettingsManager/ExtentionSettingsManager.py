@@ -4,6 +4,11 @@ from collections import UserDict
 import vanilla
 from mojo.extensions import getExtensionDefault, setExtensionDefault
 
+INPUT_MAP = {
+    "direct_get_set": [vanilla.TextEditor, vanilla.EditText, vanilla.TextBox, vanilla.CheckBox, vanilla.ComboBox],
+    "index_get_set": [vanilla.PopupButton],
+}
+
 
 class ExtentionSettingsManager(UserDict):
     """
@@ -89,15 +94,15 @@ class ExtentionSettingsManager(UserDict):
                 self._set_input_value(input_object, self[key])
 
     def _get_input_value(self, input_object):
-        if type(input_object) in [vanilla.EditText, vanilla.TextBox, vanilla.CheckBox, vanilla.ComboBox]:
+        if type(input_object) in INPUT_MAP["direct_get_set"]:
             return input_object.get()
-        elif type(input_object) in [vanilla.PopupButton]:
+        elif type(input_object) in INPUT_MAP["index_get_set"]:
             return input_object.getitems()[input_object.get()]
 
     def _set_input_value(self, input_object, value):
-        if type(input_object) in [vanilla.EditText, vanilla.TextBox, vanilla.CheckBox, vanilla.ComboBox]:
+        if type(input_object) in INPUT_MAP["direct_get_set"]:
             input_object.set(value)
-        elif type(input_object) in [vanilla.PopupButton]:
+        elif type(input_object) in INPUT_MAP["index_get_set"]:
             index = input_object.getItems().index(value)
             input_object.set(index)
 
